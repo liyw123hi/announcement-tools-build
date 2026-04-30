@@ -21,30 +21,31 @@ jobs:
         python -m pip install --upgrade pip
         pip install pyinstaller openpyxl pandas selenium webdriver-manager PyPDF2 python-docx olefile py7zr
     
-    - name: Build 公告下载器
+    - name: Build all EXEs
+      shell: pwsh
       run: |
-        copy config1.txt config.txt
-        pyinstaller --clean --noconfirm --onefile --name "公告下载器" --console download_announcements_win10.py
-        copy dist\公告下载器.exe output\ >nul 2>nul || mkdir output
-        copy dist\公告下载器.exe output\ >nul
-        copy config.txt output\ >nul
-    
-    - name: Build 公告验证工具_PDF校验
-      run: |
-        copy config2.txt config.txt
+        New-Item -ItemType Directory -Path output -Force | Out-Null
+        
+        # Build 公告下载器
+        Copy config1.xt config.xt
+        pyinstaller --clean --noconfirm --onefile --name "公告下载器" --console download_announcements_win10. py
+        Copy dist\公告下载器.exe output\
+        Copy config.xt output\
+        
+        # Build 公告验证工具_PDF校验
+        Copy config2.txt config.txt
         pyinstaller --clean --noconfirm --onefile --name "公告验证工具_PDF校验" --console 公告验证工具_pdf.py
-        copy dist\公告验证工具_PDF校验.exe output\ >nul
-        copy config.txt output\ >nul
-    
-    - name: Build 公告验证工具_按日v6
-      run: |
-        copy config3.txt config.txt
+        Copy dist\公告验证工具_PDF校验.exe output\
+        Copy config.txt output\
+        
+        # Build 公告验证工具_按日v6
+        Copy config3.txt config.txt
         pyinstaller --clean --noconfirm --onefile --name "公告验证工具_按日v6" --console 公告验证工具_按日v6_win10.py
-        copy dist\公告验证工具_按日v6.exe output\ >nul
-        copy config.txt output\ >nul
+        Copy dist\公告验证工具_按日v6.exe output\
+        Copy config.txt output\
     
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: 公告工具_Windows_exe_onefile
+        name: 公告工具_单exe
         path: output\
