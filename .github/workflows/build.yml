@@ -14,17 +14,18 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.9'
+        python-version: '3.11'
     
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pyinstaller openpyxl pandas selenium webdriver-manager PyPDF2 python-docx olefile python-docx2txt rarfile py7zr
+        pip install pyinstaller openpyxl pandas selenium webdriver-manager PyPDF2 python-docx olefile py7zr
+        pip install docx2txt 2>nul || echo "docx2txt not available, skipping"
     
     - name: Build 公告下载器
       run: |
         copy config1.txt config.txt
-        pyinstaller --clean --noconfirm --name "公告下载器" --console --add-data "config.txt;." --hidden-import=openpyxl --hidden-import=rarfile --hidden-import=py7zr download_announcements_win10.py
+        pyinstaller --clean --noconfirm --name "公告下载器" --console --add-data "config.txt;." --hidden-import=openpyxl --hidden-import=py7zr download_announcements_win10.py
         mkdir output\公告下载器
         xcopy /e /i /y dist\公告下载器 output\公告下载器 >nul
         copy config.txt output\公告下载器\ >nul
@@ -32,7 +33,7 @@ jobs:
     - name: Build 公告验证工具_PDF校验
       run: |
         copy config2.txt config.txt
-        pyinstaller --clean --noconfirm --name "公告验证工具_PDF校验" --console --add-data "config.txt;." --hidden-import=openpyxl --hidden-import=pandas --hidden-import=selenium --hidden-import=PyPDF2 --hidden-import=docx 公告验证工具_pdf.py
+        pyinstaller --clean --noconfirm --name "公告验证工具_PDF校验" --console --add-data "config.txt;." --hidden-import=openpyxl --hidden-import=pandas --hidden-import=selenium --hidden-import=PyPDF2 --hidden-import=python-docx 公告验证工具_pdf.py
         mkdir output\公告验证工具_PDF校验
         xcopy /e /i /y dist\公告验证工具_PDF校验 output\公告验证工具_PDF校验 >nul
         copy config.txt output\公告验证工具_PDF校验\ >nul
@@ -40,7 +41,7 @@ jobs:
     - name: Build 公告验证工具_按日v6
       run: |
         copy config3.txt config.txt
-        pyinstaller --clean --noconfirm --name "公告验证工具_按日v6" --console --add-data "config.txt;." --hidden-import=openpyxl --hidden-import=pandas --hidden-import=selenium --hidden-import=PyPDF2 --hidden-import=docx --hidden-import=olefile --hidden-import=docx2txt 公告验证工具_按日v6_win10.py
+        pyinstaller --clean --noconfirm --name "公告验证工具_按日v6" --console --add-data "config.txt;." --hidden-import=openpyxl --hidden-import=pandas --hidden-import=selenium --hidden-import=PyPDF2 --hidden-import=python-docx --hidden-import=olefile 公告验证工具_按日v6_win10.py
         mkdir output\公告验证工具_按日v6
         xcopy /e /i /y dist\公告验证工具_按日v6 output\公告验证工具_按日v6 >nul
         copy config.txt output\公告验证工具_按日v6\ >nul
