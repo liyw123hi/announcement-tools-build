@@ -1,0 +1,46 @@
+# config.txt — 公告下载器配置文件
+# 必须与 download_announcements.py 放在同一目录
+
+[DEFAULT]
+# ===== 必须配置项 =====
+# Excel 文件路径（支持绝对路径）
+excel_path = /Users/liyangwu/Desktop/公告下载器/每日私募.xlsx
+
+# 下载保存目录（程序自动创建）
+save_dir = /Users/liyangwu/Desktop/公告下载器/公告下载/20260429私募挂网后
+
+# ===== 程序运行模式 =====
+# 1 = 仅下载
+# 2 = 仅比对
+# 3 = 下载 + 比对（完成后自动执行内容一致性比对）
+mode = 3
+
+# ===== 压缩包比对配置 =====
+# 对照目录：已存在的压缩包所在目录（用于与下载文件比对内容）
+# 留空则禁用比对功能（mode=2/3 时需正确填写）
+compare_dir = /Users/liyangwu/Desktop/公告下载器/公告下载/20260424私募挂网后
+
+# 比对校验方式：sha256（推荐）/ md5 / size
+# sha256：逐文件 SHA256 校验，最严格
+# md5：逐文件 MD5 校验，速度更快
+# size：仅比对文件大小
+checksum = sha256
+
+# ===== 比对公告类型配置 =====
+# 比对时用于识别"仅日期差异"的公告类型关键字
+# 多个关键字用英文逗号分隔，留空则使用内置默认列表
+# 示例：anno_keywords = 净值公告,发行公告,成立公告,兑付公告
+anno_keywords = 净值公告
+
+# ===== 可选配置 =====
+# 下载间隔（秒），避免过快被限速
+download_interval = 2
+
+# 代理（留空不代理，示例：http://127.0.0.1:7890）
+proxy =
+
+# HTTP 超时（秒）
+timeout = 30
+
+# 断点续传状态文件（留空 "" 禁用）
+state_file = /Users/liyangwu/Desktop/公告下载器/.download_state.json
