@@ -27,10 +27,10 @@ jobs:
         New-Item -ItemType Directory -Path output -Force | Out-Null
         
         # Build 公告下载器
-        Copy config1.xt config.xt
-        pyinstaller --clean --noconfirm --onefile --name "公告下载器" --console download_announcements_win10. py
+        Copy config1.txt config.txt
+        pyinstaller --clean --noconfirm --onefile --name "公告下载器" --console download_announcements_win10.py
         Copy dist\公告下载器.exe output\
-        Copy config.xt output\
+        Copy config.txt output\
         
         # Build 公告验证工具_PDF校验
         Copy config2.txt config.txt
